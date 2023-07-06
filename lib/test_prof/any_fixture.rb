@@ -168,7 +168,7 @@ module TestProf
       def reset
         callbacks[:before_fixtures_reset].each(&:call)
 
-        clean if clear_tables
+        clean if config.clear_tables
         tables_cache.clear
         cache.clear
 
