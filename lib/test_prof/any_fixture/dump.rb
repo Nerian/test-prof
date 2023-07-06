@@ -6,7 +6,7 @@ require "set"
 
 module TestProf
   module AnyFixture
-    MODIFY_RXP = /^(INSERT INTO|UPDATE|DELETE FROM) (\S+)/i.freeze
+    MODIFY_RXP = /(INSERT INTO|UPDATE|DELETE FROM) (\S+)/i.freeze
     ANY_FIXTURE_RXP = /(\/\*|--).*\bany_fixture:dump/.freeze
     ANY_FIXTURE_IGNORE_RXP = /(\/\*|--).*\bany_fixture:ignore/.freeze
 
@@ -132,6 +132,9 @@ module TestProf
           when /postgresql/i
             require "test_prof/any_fixture/dump/postgresql"
             PostgreSQL.new
+          when /mysql/i
+            require "test_prof/any_fixture/dump/mysql"
+            Mysql.new
           else
             raise ArgumentError,
               "Your current database adapter (#{ActiveRecord::Base.connection.adapter_name}) " \
