@@ -14,7 +14,8 @@ module TestProf
     # AnyFixture configuration
     class Configuration
       attr_accessor :reporting_enabled, :dumps_dir, :dump_sequence_start,
-        :import_dump_via_cli, :dump_matching_queries, :force_matching_dumps
+        :import_dump_via_cli, :dump_matching_queries, :force_matching_dumps,
+        :clear_tables
       attr_reader :default_dump_watch_paths
 
       alias_method :reporting_enabled?, :reporting_enabled
@@ -40,6 +41,7 @@ module TestProf
           else
             /^$/
           end
+        @clear_tables = true
       end
 
       def before_dump(&block)
@@ -166,7 +168,7 @@ module TestProf
       def reset
         callbacks[:before_fixtures_reset].each(&:call)
 
-        clean
+        clean if clear_tables
         tables_cache.clear
         cache.clear
 
