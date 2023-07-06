@@ -51,10 +51,11 @@ module TestProf
           sql = payload.fetch(:sql)
           return if sql.match?(ANY_FIXTURE_IGNORE_RXP)
 
-          matches = sql.match(MODIFY_RXP)
-          return unless matches
-
-          reset_pk!(matches[2]) if /insert/i.match?(matches[1])
+          if matches = sql.match(MODIFY_RXP)
+            reset_pk!(matches[2]) if /insert/i.match?(matches[1])
+          else
+            puts "TestProf: Did not know what to do (ignore/record) the following query: #{sql}"
+          end
         end
 
         def finish(_event, _id, payload)
