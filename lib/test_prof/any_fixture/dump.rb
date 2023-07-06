@@ -53,8 +53,6 @@ module TestProf
 
           if matches = sql.match(MODIFY_RXP)
             reset_pk!(matches[2]) if /insert/i.match?(matches[1])
-          else
-            puts "TestProf: Did not know what to do (ignore/record) the following query: #{sql}"
           end
         end
 

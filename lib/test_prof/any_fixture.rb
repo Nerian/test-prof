@@ -7,7 +7,7 @@ require "test_prof/any_fixture/dump"
 module TestProf
   # Make DB fixtures from blocks.
   module AnyFixture
-    INSERT_RXP = /^INSERT INTO (\S+)/.freeze
+    INSERT_RXP = /^INSERT \w* INTO (\S+)/.freeze
 
     using FloatDuration
 
